@@ -85,4 +85,4 @@ jobs:
     - name: Deployment success notification
       run: |
         echo "✅ Successfully deployed to Netlify!"
-        echo "Live at: https://your-site.netlify.app"
+        echo "Live at: https://git-sonarqube.netlify.app"
