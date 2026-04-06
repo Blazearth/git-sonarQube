@@ -1,0 +1,80 @@
+================================================================================
+                         BUGS OF PROJECT - REPORT
+================================================================================
+
+PROJECT: Goal Manager (React + Vite)
+DATE: 6 April 2026
+STATUS: RESOLVED
+
+================================================================================
+BUG #1: MISSING IMPORTS IN App.jsx
+================================================================================
+
+SEVERITY: Critical
+LOCATION: src/App.jsx (lines 1-2)
+STATUS: FIXED
+
+DESCRIPTION:
+The import statements for React's useState hook and the App.css stylesheet 
+were commented out, while the code actively uses both:
+
+    // import { useState } from 'react'
+    // import './App.css'
+
+IMPACT:
+- Runtime error: useState is undefined when GoalInput component tries to use it
+- Missing styles: CSS classes (.goal-input, .goal-item, .goal-list, etc.) 
+  are not applied, breaking the UI layout
+- Build would fail or components would not render correctly
+
+ROOT CAUSE:
+Accidental commenting of critical imports during development/refactoring.
+
+FIX APPLIED:
+Uncommented the two import lines:
+
+    import { useState } from 'react'
+    import './App.css'
+
+VERIFICATION:
+✓ npm run build executed successfully
+✓ All 17 modules transformed without errors
+✓ Production bundle created: dist/assets/index-*.js and dist/assets/index-*.css
+✓ Build time: 187ms
+✓ No runtime errors detected
+
+================================================================================
+COMPONENTS AND CODE QUALITY
+================================================================================
+
+The rest of the codebase demonstrates good practices:
+
+✓ Component Drilling: Proper use of prop drilling for state management
+  - App (state) → GoalInput, GoalList → GoalItem
+
+✓ State Management: Correct use of React hooks and functional components
+  - useState for local and global goal state
+  - Separate filter functions for active/completed goals
+
+✓ Containerization: Proper Docker setup
+  - Dockerfile with multi-stage build (Node build + Nginx serve)
+  - docker-compose.yml for orchestration
+  - Port mapping: 8080:80
+
+✓ UI/UX Features:
+  - Two separate sections for Active Goals and Completed Goals
+  - Checkbox for marking goals as done
+  - Delete button for removing goals
+  - Input form with validation
+
+================================================================================
+RECOMMENDATIONS
+================================================================================
+
+1. Use a linter (ESLint) to catch commented imports
+2. Enable TypeScript for type safety
+3. Add unit tests using Jest/Vitest
+4. Consider adding localStorage persistence
+5. Implement error boundaries for better error handling
+
+================================================================================
